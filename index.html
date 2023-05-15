@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#009688" />
+    <meta name="description" content="Союзник поможет запомнить и научит." />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="icons/favicon.ico" />
+    <title>Souznik</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background-color: #ccc;
+        display: flex;
+        align-items: top;
+        justify-content: center;
+      }
+      nav {
+        position: sticky;
+        top: 0;
+        max-height: 40px;
+        padding: 0.25em;
+        background-color: #f5f5f5;
+        display: block;
+      }
+      main {
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        background-color: lightcyan;
+        height: 100%;
+        overflow-y: auto; /* Add vertical scroll bar if content overflows */
+      }
+      footer {
+        background-color: black;
+        color: rgb(51, 255, 00);
+        padding: 1px;
+        text-indent: 5px;
+        font-family: monospace;
+        white-space: pre;
+        height: 95px;
+        overflow-y: scroll;
+        --terminal-fg-color: rgb(51, 255, 00);
+      }
+
+      button {
+        margin: 1em;
+        background-image: linear-gradient(#42a1ec, #0070c9);
+        border: 1px solid #0077cc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        color: #ffffff;
+        cursor: pointer;
+        direction: ltr;
+        display: inline-block;
+        font-family: 'SF Pro Text', 'SF Pro Icons', 'AOS Icons',
+          'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 17px;
+        font-weight: 400;
+        letter-spacing: -0.022em;
+        line-height: 1.47059;
+        min-width: 30px;
+        overflow: visible;
+        padding: 25px 15px;
+        text-align: center;
+        vertical-align: baseline;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        max-width: 17em;
+      }
+
+      button:disabled {
+        cursor: default;
+        opacity: 0.3;
+      }
+
+      .splash {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        font-size: 96px;
+        z-index: 9999;
+      }
+      #fail-splash {
+        background-color: rgba(210, 176, 176, 0.7);
+      }
+      #success-splash {
+        background-color: rgba(176, 210, 190, 0.7);
+      }
+      #done-splash {
+        background-color: rgba(117, 200, 233, 0.7);
+        flex-direction: column;
+      }
+      .muted {
+        opacity: 0.2;
+      }
+
+      button.main-nav {
+        background-color: #36a9ae;
+        background-image: linear-gradient(#37adb2, #329ca0);
+        display: block;
+        font-size: 20px;
+        line-height: 100%;
+        margin: 0;
+        padding: 5px 10px;
+        touch-action: manipulation;
+      }
+      button.main-nav:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+      button.main-nav:disabled:active {
+        pointer-events: none;
+      }
+      button.main-nav:disabled:hover {
+        box-shadow: none;
+      }
+
+      .main-container {
+        width: 100%;
+        min-height: 100%;
+        background-color: #fff;
+        box-shadow: 0 0 1em rgba(0, 0, 0, 0.3);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      @media screen and (min-width: 768px) {
+        .main-container {
+          max-width: none;
+          max-height: none;
+          min-height: 70vh;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="fail-splash" class="splash">&#128577;</div>
+    <div id="success-splash" class="splash">&#128077;</div>
+    <div id="done-splash" class="splash">
+      <p>🤘</p>
+      <p>
+        <button
+          onclick="document.getElementById('done-splash').style.display='none'"
+        >
+          Закрыть
+        </button>
+      </p>
+    </div>
+    <div class="main-container">
+      <nav id="main-nav" class="main-nav">
+        <button class="main-nav" onclick="goHome()">⌂</button>
+      </nav>
+      <main id="main" class="main-block">
+        <div>
+          <button onclick="mTable()">Таблица умножения</button>
+        </div>
+        <div>
+          <button onclick="mTable()">Таблица умножения</button>
+        </div>
+      </main>
+      <footer id="main-footer" class="main-footer"></footer>
+    </div>
+    <script src="https://unpkg.com/ttty/dist/ttty.iife.js"></script>
+    <script>
+      const mainData = [
+        {
+          id: 'math',
+          name: 'Математика',
+          content: [
+            {
+              id: 'mTable2',
+              name: 'Таблица умножения для 2',
+              generator: () => mTable(2),
+            },
+            {
+              id: 'mTable3',
+              name: 'Таблица умножения для 3',
+              generator: () => mTable(3),
+            },
+            {
+              id: 'mTable4',
+              name: 'Таблица умножения для 4',
+              generator: () => mTable(4),
+            },
+            {
+              id: 'mTable5',
+              name: 'Таблица умножения для 5',
+              generator: () => mTable(5),
+            },
+            {
+              id: 'mTable6',
+              name: 'Таблица умножения для 6',
+              generator: () => mTable(6),
+            },
+            {
+              id: 'mTable7',
+              name: 'Таблица умножения для 7',
+              generator: () => mTable(7),
+            },
+            {
+              id: 'mTable8',
+              name: 'Таблица умножения для 8',
+              generator: () => mTable(8),
+            },
+            {
+              id: 'mTable9',
+              name: 'Таблица умножения для 9',
+              generator: () => mTable(9),
+            },
+          ],
+        },
+        {
+          id: 'english',
+          name: 'Английский',
+          content: [
+            {
+              id: 'cards1',
+              name: 'Карточки. Набор 1',
+              generator: () => emptyGenerator('Английский. Карточки. Набор 1'),
+            },
+            {
+              id: 'cards2',
+              name: 'Карточки. Набор 2',
+              generator: () => emptyGenerator('Английский. Карточки. Набор 2'),
+            },
+            {
+              id: 'cards3',
+              name: 'Карточки. Набор 3',
+              generator: () => emptyGenerator('Английский. Карточки. Набор 3'),
+            },
+            {
+              id: 'cards4',
+              name: 'Карточки. Набор 4',
+              generator: () => emptyGenerator('Английский. Карточки. Набор 4'),
+            },
+            {
+              id: 'cards5',
+              name: 'Карточки. Набор 5',
+              generator: () => emptyGenerator('Английский. Карточки. Набор 5'),
+            },
+          ],
+        },
+        {
+          id: 'spanish',
+          name: 'Испанский',
+          content: [
+            { id: 'cards1', name: 'Карточки. Набор 1' },
+            { id: 'cards2', name: 'Карточки. Набор 2' },
+            { id: 'cards3', name: 'Карточки. Набор 3' },
+            { id: 'cards4', name: 'Карточки. Набор 4' },
+            { id: 'cards5', name: 'Карточки. Набор 5' },
+          ],
+        },
+        {
+          id: 'geo',
+          name: 'География',
+          content: [
+            { id: 'continents', name: 'Материки' },
+            { id: 'oceans', name: 'Океаны' },
+            { id: 'bigCountries', name: 'Большие страны' },
+            { id: 'bigIslands', name: 'Большие острова' },
+            { id: 'bigRivers', name: 'Большие реки' },
+            { id: 'bigLakes', name: 'Большие озера' },
+          ],
+        },
+      ];
+      // Handle page navigation when the hash in the URL changes
+      window.addEventListener('hashchange', () => {
+        const page = window.location.hash.substring(1); // Get the page name from the URL hash
+        console.log('location changed! page=', page);
+      });
+      const homeUrl = new URL(window.location.origin);
+      const mainDiv = document.querySelector('#main');
+      const mainNav = document.querySelector('#main-nav');
+      const mainHomeHTML = mainDiv.innerHTML;
+      function setPageUrl(newUrl) {
+        history.pushState(null, null, newUrl);
+      }
+      function goHome() {
+        goToChapter();
+      }
+      const stickyBlock = document.querySelector('.main-nav');
+      function loadDataToMainDiv(data) {
+        mainDiv.innerHTML = '';
+        data.forEach((el) => {
+          const dv = document.createElement('div');
+          const btn = document.createElement('button');
+          btn.textContent = el.name;
+          console.log('window.location=', new URL(window.location));
+          if (el.generator)
+            btn.onclick = () => {
+              setPageUrl(el.id);
+              el.generator();
+            };
+          else if (el.content) btn.onclick = () => goToChapter(el);
+          // btn.onclick = () => loadDataToMainDiv(el.content);
+          else
+            btn.onclick = () => {
+              typePr('Не найдена функция для этой кнопки 8( Ничего не делаю!');
+            };
+          dv.appendChild(btn);
+          mainDiv.appendChild(dv);
+        });
+      }
+      function goToChapter(chapter) {
+        if (!chapter) {
+          console.log('goHome');
+          loadDataToMainDiv(mainData);
+          setPageUrl(homeUrl);
+          return;
+        }
+        console.log('go to chapter ' + chapter.name);
+        loadDataToMainDiv(chapter.content);
+        setPageUrl(homeUrl + chapter.id);
+      }
+      goHome();
+      const termSettings = {
+        host: document.querySelector('footer'),
+        welcomeMessage: 'Союзник приветствует тебя!',
+        prompt: '> ',
+        commands: {
+          echo: {
+            name: 'echo',
+            description: 'a test command with one echo arg',
+            argDescriptions: ['a string to be echoed in console'],
+            func: ({ print }, argument) => {
+              print(argument);
+            },
+          },
+          test: {
+            name: 'test',
+            description: 'a test command with no args',
+            func: ({ print }) => {
+              print('foo');
+            },
+          },
+          multiply: {
+            name: 'multiply',
+            description: 'Multiply two numbers',
+            argDescriptions: ['number one', 'number two'],
+            func: ({ print }, one, two) => {
+              print(Number(one) * Number(two));
+            },
+          },
+        },
+      };
+
+      const terminal = ttty.initTerminal(termSettings);
+      const typePr = function (text) {
+        return new Promise((resolve, reject) => {
+          terminal.type(text, 50, resolve);
+        });
+      };
+      function scrollTerm() {
+        const div = document.getElementById('main-footer');
+        div.scrollTop = div.scrollHeight;
+      }
+
+      function getUserId() {
+        let userId = null;
+
+        // Check if userId exists in local storage
+        if (localStorage.getItem('userId')) {
+          userId = localStorage.getItem('userId');
+          terminal.type('Твой id найденный в localStorage = ' + userId, 50);
+        }
+
+        // Check if userId exists in cookies
+        if (!userId && document.cookie.includes('userId')) {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith('userId=')) {
+              userId = cookie.substring('userId='.length);
+              break;
+            }
+          }
+
+          typePr('Твой id найденный в cookies = ' + userId)
+            .then(() => typePr('Сохранили в localStorage! Во избежание!'))
+            .then(scrollTerm);
+          localStorage.setItem('userId', userId);
+        }
+        return userId;
+      }
+
+      // Call the function to retrieve the userId
+      const userId = getUserId();
+      if (!userId) {
+        const pr = typePr(
+          'Твой id не был найден ни в localStorage ни в cookies!',
+        )
+          .then(() =>
+            typePr('Считаем что ты первый раз и будем генерировать новый!'),
+          )
+          .then(scrollTerm);
+        // Initialize the agent at application startup.
+        const fpPromise = import('https://openfpcdn.io/fingerprintjs/v3').then(
+          (FingerprintJS) => FingerprintJS.load(),
+        );
+
+        // Get the visitor identifier when you need it.
+        fpPromise
+          .then((fp) => fp.get())
+          .then((result) => {
+            // This is the visitor identifier:
+            const visitorId = result.visitorId;
+            console.log('First time. visitorId=', visitorId);
+            localStorage.setItem('userId', visitorId);
+            document.cookie = `userId=${visitorId}; expires=Sun, 1 Jan 2099 00:00:00 UTC; path=/`;
+            pr.then(() => typePr(`Твой id теперь ${visitorId}!`))
+              .then(() =>
+                typePr(
+                  `Сохранен в localStorage! Ну и в cookies, на всякий случай.`,
+                ),
+              )
+              .then(scrollTerm);
+            // terminal.type(
+            //   `Твой id теперь ${visitorId}! Сохранен в localStorage! Ну и в cookies, на всякий случай.`,
+            //   50,
+            // );
+          })
+          .catch((error) => console.error(error));
+      }
+      console.log('User ID:', userId);
+
+      //shuffle array
+      function shuffle(array) {
+        let currentIndex = array.length,
+          randomIndex;
+
+        // While there remain elements to shuffle.
+        while (currentIndex != 0) {
+          // Pick a remaining element.
+          randomIndex = Math.floor(Math.random() * currentIndex);
+          currentIndex--;
+
+          // And swap it with the current element.
+          [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex],
+            array[currentIndex],
+          ];
+        }
+        return array;
+      }
+      //
+      function setRegStyleToEl(el) {
+        el.style.fontWeight = 'normal';
+        el.style.fontSize = '1.5em';
+        el.style.color = 'black';
+      }
+      function setAskStyleToEl(el) {
+        el.style.fontWeight = 'bolder';
+        el.style.fontSize = '2em';
+        el.style.color = 'green';
+        el.classList.remove('muted');
+      }
+      const questionsArr = [];
+      function mTable(val) {
+        const mainDiv = document.querySelector('#main');
+
+        console.log('mTable=> click');
+        mainDiv.innerHTML = ''; // Clear the content of the main div
+
+        const container = document.createElement('div');
+        container.style.width = '95%';
+        container.style.height = '95%';
+        container.style.textAlign = 'center';
+        container.style.display = 'grid';
+        container.style.position = 'relative';
+        container.style.gridTemplateColumns = '1fr';
+        container.style.gridTemplateRows = '5fr 1fr 3fr';
+
+        const issues = document.createElement('div');
+        issues.id = 'currIssues';
+        issues.style.width = '100%';
+        issues.style.textAlign = 'center';
+        issues.style.display = 'grid';
+        issues.style.gridTemplateColumns = '1fr 1fr';
+
+        for (let i = 0; i < 10; i++) {
+          const question = document.createElement('div');
+          questionsArr[i] = { no: i, answered: 0 };
+          question.classList.add('questions');
+          question.classList.add('question' + i);
+          question.style.padding = '10px';
+          // item.style.width = '50%';
+          const sizeFixSymbol = document.createElement('div');
+          sizeFixSymbol.style.display = 'inline-block';
+          sizeFixSymbol.innerHTML = '&nbsp;';
+          setAskStyleToEl(sizeFixSymbol);
+          const issue = document.createElement('div');
+          questionsArr[i].issue = issue;
+          issue.style.display = 'inline-block';
+          issue.style.marginRight = '1em';
+          setRegStyleToEl(issue);
+          issue.classList.add('issues');
+          issue.id = 'issue' + i;
+          issue.textContent = `${val} x ${i + 1} = `;
+          const answer = document.createElement('div');
+          questionsArr[i].answer = answer;
+          answer.style.display = 'inline-block';
+          setRegStyleToEl(answer);
+          answer.classList.add('answers');
+          answer.id = 'answer' + i;
+          answer.textContent = `${val * (i + 1)}`;
+          question.appendChild(sizeFixSymbol);
+          question.appendChild(issue);
+          question.appendChild(answer);
+          issues.appendChild(question);
+        }
+        container.appendChild(issues);
+        const goDiv = document.createElement('div');
+        goDiv.style.width = '100%';
+        // goDiv.style.gridColumn = '1 / 3';
+        const goButton = document.createElement('button');
+        goButton.textContent = `Поехали`;
+        goButton.onclick = goTest;
+        goDiv.appendChild(goButton);
+        container.appendChild(goDiv);
+
+        const answersDiv = document.createElement('div');
+        answersDiv.id = 'answersDiv';
+        answersDiv.style.width = '100%';
+        container.appendChild(answersDiv);
+
+        mainDiv.appendChild(container);
+        return;
+      }
+      function getQuestion() {
+        console.log('getQuestion=', questionsArr);
+        const notAnsw = questionsArr.filter((item) => !item.answered);
+        console.log('getQuestion=', notAnsw);
+        if (notAnsw.length > 0) {
+          return notAnsw[Math.floor(Math.random() * notAnsw.length)].no;
+        } else {
+          return null;
+        }
+      }
+      function goTest() {
+        console.log('goTest');
+        questionsArr.forEach((item) => {
+          if (!item.answered) item.answer.style.visibility = 'hidden';
+        });
+        const answersDiv = document.querySelector('#answersDiv');
+        console.log('answersDiv=', answersDiv);
+        answersDiv.innerHTML = '';
+        const currNo = getQuestion();
+        console.log('corrNo=', currNo);
+        if (currNo === null) {
+          showDoneSplash();
+          questionsArr.forEach((el) => {
+            el.answered = 0;
+            el.issue.classList.remove('muted');
+            el.answer.classList.remove('muted');
+          });
+          return;
+        }
+        setAskStyleToEl(questionsArr[currNo].issue);
+        setAskStyleToEl(questionsArr[currNo].answer);
+        const testAnswersNo = [currNo];
+        questionsArr.forEach((el) => {
+          if (currNo !== el.no) {
+            el.issue.classList.add('muted');
+            el.answer.classList.add('muted');
+          }
+        });
+        let i = 0;
+        while (i < 5) {
+          const a = Math.floor(Math.random() * questionsArr.length);
+          if (!testAnswersNo.includes(a)) {
+            testAnswersNo.push(a);
+            i++;
+          }
+        }
+        shuffle(testAnswersNo);
+        testAnswersNo.forEach((itemNo) => {
+          const answBtn = document.createElement('button');
+          answBtn.display = 'inline-block';
+          answBtn.style.fontSize = '2em';
+          answBtn.style.width = '5em';
+          answBtn.style.margin = '1em';
+          answBtn.style.padding = '1em';
+          answBtn.textContent = questionsArr[itemNo].answer.textContent;
+          answBtn.onclick = () => {
+            if (
+              questionsArr[itemNo].answer.textContent ==
+              questionsArr[currNo].answer.textContent
+            ) {
+              questionsArr[currNo].answer.style.visibility = 'visible';
+              questionsArr[itemNo].answered = 1;
+              setRegStyleToEl(questionsArr[itemNo].issue);
+              setRegStyleToEl(questionsArr[itemNo].answer);
+              showSuccessSplash();
+              goTest();
+            } else {
+              showFailSplash();
+            }
+          };
+          answersDiv.appendChild(answBtn);
+        });
+      }
+      //===============================
+      function emptyGenerator(str) {
+        const container = document.createElement('div');
+        container.innerHTML = 'Пока ничего нет 8( для "' + str + '"';
+        mainDiv.innerHTML = '';
+        mainDiv.appendChild(container);
+        return;
+      }
+      //===============================
+      function showFailSplash() {
+        const splashDiv = document.getElementById('fail-splash');
+        splashDiv.style.display = 'flex';
+
+        setTimeout(() => {
+          splashDiv.style.display = 'none';
+        }, 1000);
+      }
+      function showSuccessSplash() {
+        const splashDiv = document.getElementById('success-splash');
+        splashDiv.style.display = 'flex';
+
+        setTimeout(() => {
+          splashDiv.style.display = 'none';
+        }, 1000);
+      }
+      function showDoneSplash() {
+        const splashDiv = document.getElementById('done-splash');
+        splashDiv.style.display = 'flex';
+      }
+      //===============================
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+          .register('/sw.js')
+          .then(function (registration) {
+            console.log(
+              'Service Worker registered successfully:',
+              registration,
+            );
+          })
+          .catch(function (error) {
+            console.log('Service Worker registration failed:', error);
+          });
+      }
+    </script>
+  </body>
+</html>
