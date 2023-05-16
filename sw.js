@@ -1,4 +1,4 @@
-const CACHE_NAME = 'souznik-cache-v1';
+const CACHE_NAME = 'souznik-cache-v2';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -8,8 +8,8 @@ const urlsToCache = [
   '/icons/favicon-32x32.png',
   '/icons/android-chrome-192x192.png',
   '/icons/android-chrome-512x512.png',
+  '/cards.js',
   // '/style.css',
-  // '/script.js',
 ];
 
 self.addEventListener('install', (event) => {

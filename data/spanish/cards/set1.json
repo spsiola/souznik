@@ -1,0 +1,11 @@
+{
+  "id": "cardSet1",
+  "name": "Похожие слова начинающиеся на pue...",
+  "cards": [
+    { "id": 1, "issue": "puerto", "answer": "порт" },
+    { "id": 2, "issue": "puerta", "answer": "дверь" },
+    { "id": 3, "issue": "puede", "answer": "может" },
+    { "id": 4, "issue": "puedo", "answer": "я могу" },
+    { "id": 5, "issue": "pueblo", "answer": "деревня" }
+  ]
+}

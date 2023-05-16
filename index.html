@@ -257,7 +257,12 @@
           id: 'spanish',
           name: 'Испанский',
           content: [
-            { id: 'cards1', name: 'Карточки. Набор 1' },
+            {
+              id: 'cards1',
+              name: 'Карточки. Набор 1',
+              script: 'cards.js',
+              generator: () => execGenerator('testCard'),
+            },
             { id: 'cards2', name: 'Карточки. Набор 2' },
             { id: 'cards3', name: 'Карточки. Набор 3' },
             { id: 'cards4', name: 'Карточки. Набор 4' },
@@ -300,12 +305,22 @@
           const btn = document.createElement('button');
           btn.textContent = el.name;
           console.log('window.location=', new URL(window.location));
-          if (el.generator)
+          if (el.generator) {
+            if (el.script) {
+              addScript(el.script)
+                .then(() => {
+                  console.log(`Script "${el.script}" loaded successfully`);
+                  // The script is now available for use
+                })
+                .catch((error) => {
+                  console.error(`Error loading script "${el.script}":`, error);
+                });
+            }
             btn.onclick = () => {
               setPageUrl(el.id);
               el.generator();
             };
-          else if (el.content) btn.onclick = () => goToChapter(el);
+          } else if (el.content) btn.onclick = () => goToChapter(el);
           // btn.onclick = () => loadDataToMainDiv(el.content);
           else
             btn.onclick = () => {
@@ -620,6 +635,32 @@
         mainDiv.innerHTML = '';
         mainDiv.appendChild(container);
         return;
+      }
+      function execGenerator(funcName) {
+        console.log('execGenerator start with funcName=', funcName);
+        if (typeof window[funcName] === 'function') {
+          console.log('window[funcName] === function');
+          window[funcName]();
+        } else {
+          console.error(`Function ${funcName} does not exist.`);
+        }
+      }
+      //===============================
+      function addScript(url) {
+        return new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.src = url;
+
+          script.onload = () => {
+            resolve();
+          };
+
+          script.onerror = () => {
+            reject(new Error(`Failed to load script: ${url}`));
+          };
+
+          document.head.appendChild(script);
+        });
       }
       //===============================
       function showFailSplash() {

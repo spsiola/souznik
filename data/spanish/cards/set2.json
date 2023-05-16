@@ -1,0 +1,122 @@
+{
+  "id": "cardSet2",
+  "name": "Числительные",
+  "cards": [
+    { "id": 1, "issue": "uno / primero", "answer": "один / первый" },
+    { "id": 2, "issue": "dos / segundo", "answer": "два / второй" },
+    { "id": 3, "issue": "tres / tercero", "answer": "три / третий" },
+    { "id": 4, "issue": "cuatro / cuatro", "answer": "четыре / четвертый" },
+    { "id": 5, "issue": "cinco / quinto", "answer": "пять / пятый" },
+    { "id": 6, "issue": "seis / sexto", "answer": "шесть / шестой" },
+    { "id": 7, "issue": "siete / séptimo", "answer": "семь / седьмой" },
+    { "id": 8, "issue": "ocho / octavo", "answer": "восемь / восьмой" },
+    { "id": 9, "issue": "nueve / noveno", "answer": "девять / девятый" },
+    { "id": 10, "issue": "diez / décimo", "answer": "десять / десятый" },
+    {
+      "id": 11,
+      "issue": "once / undécimo",
+      "answer": "одиннадцать / одиннадцатый"
+    },
+    {
+      "id": 12,
+      "issue": "doce / duodécimo",
+      "answer": "двенадцать / двенадцатый"
+    },
+    {
+      "id": 13,
+      "issue": "trece / decimotercero",
+      "answer": "тринадцать / тринадцатый"
+    },
+    {
+      "id": 14,
+      "issue": "catorce / decimocuarto",
+      "answer": "четырнадцать / четырнадцатый"
+    },
+    { "id": 15, "issue": "quince / decimoquinto", "answer": "15 / 15й" },
+    { "id": 16, "issue": "dieciséis / decimosexto", "answer": "16 / 16й" },
+    { "id": 17, "issue": "diecisiete / decimoséptimo", "answer": "17 / 17й" },
+    { "id": 18, "issue": "dieciocho / undécimo", "answer": "18 / 18й" },
+    { "id": 19, "issue": "diecinueve / undécimo", "answer": "19 / 19й" },
+    { "id": 20, "issue": "veinte / vigésimo", "answer": "20 / 20й" },
+    { "id": 21, "issue": "veintiuno / veintiuno", "answer": "21 / 21й" },
+    { "id": 22, "issue": "veintidós / vigesimo segundo", "answer": "22 / 22й" },
+    {
+      "id": 23,
+      "issue": "veintitrés / vigésimo tercero",
+      "answer": "23 / 23й"
+    },
+    {
+      "id": 24,
+      "issue": "veinticinco / vigésimo quinto",
+      "answer": "25 / 25й"
+    },
+    {
+      "id": 25,
+      "issue": "veinticinco / vigésimo quinto",
+      "answer": "25 / 25й"
+    },
+    {
+      "id": 26,
+      "issue": "treinta / trigésimo",
+      "answer": "30 / 30й"
+    },
+    {
+      "id": 27,
+      "issue": "treinta y uno / trigésimo primero ",
+      "answer": "31 / 31й"
+    },
+    {
+      "id": 28,
+      "issue": "treinta y siete / trigésimo séptimo",
+      "answer": "37 / 37й"
+    },
+    {
+      "id": 29,
+      "issue": "treinta y ocho / trigésimo octavo",
+      "answer": "38 / 38й"
+    },
+    { "id": 30, "issue": "cuarenta / cuadragésimo", "answer": "40 / 40й" },
+    { "id": 31, "issue": "cincuenta / quincuagésimo", "answer": "50 / 50й" },
+    { "id": 32, "issue": "sesenta / sexagésimo", "answer": "60 / 60й" },
+    { "id": 33, "issue": "setenta / septuagésimo", "answer": "70 / 70й" },
+    { "id": 34, "issue": "ochenta / dieciocho", "answer": "80 / 80й" },
+    { "id": 35, "issue": "noventa / nonagésimo", "answer": "90 / 90й" },
+    { "id": 36, "issue": "cien / centésimo", "answer": "100 / 100й" },
+    {
+      "id": 37,
+      "issue": "ciento uno / cien y primero",
+      "answer": "101 / 101й"
+    },
+    { "id": 38, "issue": "ciento diez / cien décimo", "answer": "110 / 110й" },
+    {
+      "id": 39,
+      "issue": "ciento once / ciento undécimo",
+      "answer": "111 / 111й"
+    },
+    {
+      "id": 40,
+      "issue": "ciento catorce / ciento catorceavo",
+      "answer": "114 / 114й"
+    },
+    {
+      "id": 41,
+      "issue": "ciento quince / ciento quince",
+      "answer": "115 / 115й"
+    },
+    { "id": 42, "issue": "doscientos / doscientos", "answer": "200 / 200й" },
+    { "id": 43, "issue": "trescientos / trescientos", "answer": "300 / 300й" },
+    {
+      "id": 44,
+      "issue": "cuatrocientos / cuatrocientos",
+      "answer": "400 / 400й"
+    },
+    { "id": 45, "issue": "quinientos / quinientos", "answer": "500 / 500й" },
+    {
+      "id": 46,
+      "issue": "setecientos / septingentésimo",
+      "answer": "700 / 700й"
+    },
+    { "id": 47, "issue": "mil / milésimo", "answer": "1000 / 1000й" },
+    { "id": 48, "issue": "mil cien / mil centésima", "answer": "1100 / 1100й" }
+  ]
+}
