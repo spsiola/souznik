@@ -23,7 +23,8 @@
         max-height: 40px;
         padding: 0.25em;
         background-color: #f5f5f5;
-        display: block;
+        display: inline-flex;
+        flex-wrap: wrap;
       }
       main {
         display: flex;
@@ -42,6 +43,7 @@
         text-indent: 5px;
         font-family: monospace;
         white-space: pre;
+        box-sizing: border-box;
         height: 95px;
         overflow-y: scroll;
         --terminal-fg-color: rgb(51, 255, 00);
@@ -65,7 +67,6 @@
         line-height: 1.47059;
         min-width: 30px;
         overflow: visible;
-        padding: 25px 15px;
         text-align: center;
         vertical-align: baseline;
         user-select: none;
@@ -79,54 +80,80 @@
         opacity: 0.3;
       }
 
+      button.chapter-button {
+        position: relative;
+        width: 200px;
+        height: 80px;
+      }
       .splash {
         display: none;
+        box-sizing: border-box;
         align-items: center;
         justify-content: center;
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
-        height: 100%;
+        height: calc(100% - 86px);
         background-color: white;
-        font-size: 96px;
+        font-size: 24px;
         z-index: 9999;
       }
       #fail-splash {
+        font-size: 128px;
         background-color: rgba(210, 176, 176, 0.7);
       }
       #success-splash {
+        font-size: 128px;
         background-color: rgba(176, 210, 190, 0.7);
       }
       #done-splash {
+        font-size: 128px;
         background-color: rgba(117, 200, 233, 0.7);
+        flex-direction: column;
+      }
+      #info-splash {
+        background-color: rgba(255, 255, 255, 0.9);
         flex-direction: column;
       }
       .muted {
         opacity: 0.2;
       }
 
-      button.main-nav {
+      button.main-nav-btn {
         background-color: #36a9ae;
         background-image: linear-gradient(#37adb2, #329ca0);
         display: block;
         font-size: 20px;
         line-height: 100%;
-        margin: 0;
+        margin: 0 3px;
         padding: 5px 10px;
         touch-action: manipulation;
       }
-      button.main-nav:disabled {
+      button.main-nav-btn:disabled {
         cursor: not-allowed;
         opacity: 0.6;
       }
-      button.main-nav:disabled:active {
+      button.main-nav-btn:disabled:active {
         pointer-events: none;
       }
-      button.main-nav:disabled:hover {
+      button.main-nav-btn:disabled:hover {
         box-shadow: none;
       }
-
+      button.close-splash-btn {
+        position: absolute;
+        top: 0px;
+        right: 10px;
+        height: 30px;
+        width: 30px;
+        margin: 3px;
+        padding: 3px;
+        background: none;
+        border: none;
+        color: rgba(212, 106, 106, 0.7);
+        font-size: 24px;
+        cursor: pointer;
+      }
       .main-container {
         width: 100%;
         min-height: 100%;
@@ -149,6 +176,18 @@
   <body>
     <div id="fail-splash" class="splash">&#128577;</div>
     <div id="success-splash" class="splash">&#128077;</div>
+    <div id="info-splash" class="splash">
+      <button
+        class="close-splash-btn"
+        onclick="document.getElementById('info-splash').style.display='none'"
+      >
+        &#x2716;
+      </button>
+      🏆=&#127942; 🥇=&#129351; 🥈=&#129352; 🥉=&#129353; 🏅=&#127941;
+      🎖=&#127894; 🎗=&#127895; 🎉=&#127881; 💎=&#128142; 🛠=&#128736; 💰=&#128176;
+      📧=&#128231; 🔔=&#128276; 🔕=&#128277;
+      🔥💥✨🌟⭐️💐🌵👑🖖👌✊👍👎✌️💍❤️💖💝🎁🎈
+    </div>
     <div id="done-splash" class="splash">
       <p>🤘</p>
       <p>
@@ -161,7 +200,35 @@
     </div>
     <div class="main-container">
       <nav id="main-nav" class="main-nav">
-        <button class="main-nav" onclick="goHome()">⌂</button>
+        <button
+          name="goHome"
+          class="main-nav-btn"
+          onclick="goHome()"
+          style="margin-right: 20px"
+        >
+          &#8962;
+        </button>
+        <button name="settings" class="main-nav-btn" onclick="goHome()">
+          &#9881;
+        </button>
+        <button name="about" class="main-nav-btn" onclick="goHome()">
+          &#9432;
+        </button>
+        <button name="donation" class="main-nav-btn" onclick="goHome()">
+          &#8383;
+        </button>
+        <button name="friends" class="main-nav-btn" onclick="goHome()">
+          &#128101;
+        </button>
+        <button
+          name="profile"
+          class="main-nav-btn"
+          onclick="document.getElementById('info-splash').style.display='flex'"
+        >
+          &#128100;
+        </button>
+        <button class="main-nav-btn" onclick="goHome()">&#128170;</button>
+        <button class="main-nav-btn" onclick="goHome()">&#127942;</button>
       </nav>
       <main id="main" class="main-block">
         <div>
@@ -179,6 +246,7 @@
         {
           id: 'math',
           name: 'Математика',
+          image: 'images/math.jpg',
           content: [
             {
               id: 'mTable2',
@@ -225,6 +293,7 @@
         {
           id: 'english',
           name: 'Английский',
+          image: 'images/english.jpg',
           content: [
             {
               id: 'cards1',
@@ -256,6 +325,7 @@
         {
           id: 'spanish',
           name: 'Испанский',
+          image: 'images/spanish.jpg',
           content: [
             {
               id: 'cards1',
@@ -272,6 +342,7 @@
         {
           id: 'geo',
           name: 'География',
+          image: 'images/geo.webp',
           content: [
             { id: 'continents', name: 'Материки' },
             { id: 'oceans', name: 'Океаны' },
@@ -303,8 +374,55 @@
         data.forEach((el) => {
           const dv = document.createElement('div');
           const btn = document.createElement('button');
-          btn.textContent = el.name;
-          console.log('window.location=', new URL(window.location));
+          btn.classList.add('chapter-button');
+          if (el.image) {
+            // Create the <picture> element
+            // const pic = document.createElement('picture');
+            // pic.style.width='80px';
+            // pic.style.height='100%';
+
+            // Create the <source> element for WebP source
+            // const sourceWebp = document.createElement('source');
+            // sourceWebp.setAttribute('srcset', 'image.webp');
+            // sourceWebp.setAttribute('type', 'image/webp');
+
+            // // Create the <source> element for JPEG source
+            // const sourceJpeg = document.createElement('source');
+            // sourceJpeg.setAttribute('srcset', 'image.jpg');
+            // sourceJpeg.setAttribute('type', 'image/jpeg');
+
+            // Create the <img> element as fallback
+            const inBtnDiv = document.createElement('div');
+            inBtnDiv.style.width = '100%';
+            inBtnDiv.style.height = '100%';
+            inBtnDiv.style.position = 'relative';
+            inBtnDiv.style.display = 'flex';
+            inBtnDiv.style.flexDirection = 'row';
+            inBtnDiv.style.alignItems = 'center';
+            const img = document.createElement('img');
+            img.setAttribute('src', el.image);
+            img.setAttribute('alt', el.name);
+            img.style.width = '80px';
+            img.style.height = '100%';
+            img.style.marginLeft = '-5px';
+            img.style.marginRight = '7px';
+            img.display = 'block';
+            inBtnDiv.appendChild(img);
+            const txt = document.createElement('div');
+            txt.style.flexGrow = '1';
+            txt.style.justifyContent = 'center';
+            txt.textContent = el.name;
+            inBtnDiv.appendChild(txt);
+            btn.appendChild(inBtnDiv);
+
+            // Append the elements to the <picture> element
+            // picture.appendChild(sourceWebp);
+            // picture.appendChild(sourceJpeg);
+            // picture.appendChild(img);
+
+            // Append the <picture> element to a container in the HTML document
+            // btn.appendChild(picture);
+          } else btn.textContent = el.name;
           if (el.generator) {
             if (el.script) {
               addScript(el.script)
