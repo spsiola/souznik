@@ -1,0 +1,22 @@
+{
+  "id": "setMonthsAndSeasons",
+  "name": "Месяцы и сезоны",
+  "cards": [
+    { "id": 1, "issue": "January", "answer": "январь" },
+    { "id": 2, "issue": "February", "answer": "февраль" },
+    { "id": 3, "issue": "March", "answer": "март" },
+    { "id": 4, "issue": "April", "answer": "апрель" },
+    { "id": 5, "issue": "May", "answer": "май" },
+    { "id": 6, "issue": "June", "answer": "июнь" },
+    { "id": 7, "issue": "July", "answer": "июль" },
+    { "id": 8, "issue": "August", "answer": "август" },
+    { "id": 9, "issue": "September", "answer": "сентябрь" },
+    { "id": 10, "issue": "October", "answer": "октябрь" },
+    { "id": 11, "issue": "November", "answer": "ноябрь" },
+    { "id": 12, "issue": "December", "answer": "декабрь" },
+    { "id": 13, "issue": "Winter", "answer": "зима" },
+    { "id": 14, "issue": "Spring", "answer": "весна" },
+    { "id": 15, "issue": "Summer", "answer": "лето" },
+    { "id": 16, "issue": "Autumn", "answer": "осень" }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "setDaysOfTheWeek",
+  "name": "Дни недели",
+  "cards": [
+    { "id": 1, "issue": "Monday", "answer": "понедельник" },
+    { "id": 2, "issue": "Tuesday", "answer": "вторник" },
+    { "id": 3, "issue": "Wednesday", "answer": "среда" },
+    { "id": 4, "issue": "Thursday", "answer": "четверг" },
+    { "id": 5, "issue": "Friday", "answer": "пятница" },
+    { "id": 6, "issue": "Saturday", "answer": "суббота" },
+    { "id": 7, "issue": "Sunday", "answer": "воскресенье" },
+    { "id": 8, "issue": "weekend", "answer": "выходные" },
+    { "id": 9, "issue": "weekdays", "answer": "будние дни" }
+  ]
+}

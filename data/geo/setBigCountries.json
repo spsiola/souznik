@@ -1,0 +1,227 @@
+{
+  "id": "setCountries",
+  "name": "Дни недели",
+  "countries": [
+    {
+      "id": "CN",
+      "name": {
+        "english": "China",
+        "russian": "Китай"
+      },
+      "population": 1400000000,
+      "area": 9596961,
+      "capital": {
+        "english": "Beijing",
+        "russian": "Пекин"
+      }
+    },
+    {
+      "id": "IN",
+      "name": {
+        "english": "India",
+        "russian": "Индия"
+      },
+      "population": 1300000000,
+      "area": 3287263,
+      "capital": {
+        "english": "New Delhi",
+        "russian": "Нью-Дели"
+      }
+    },
+    {
+      "id": "US",
+      "name": {
+        "english": "United States",
+        "russian": "Соединенные Штаты"
+      },
+      "population": 332000000,
+      "area": 9525067,
+      "capital": {
+        "english": "Washington, D.C.",
+        "russian": "Вашингтон, округ Колумбия"
+      }
+    },
+    {
+      "id": "ID",
+      "name": {
+        "english": "Indonesia",
+        "russian": "Индонезия"
+      },
+      "population": 273000000,
+      "area": 1904569,
+      "capital": {
+        "english": "Jakarta",
+        "russian": "Джакарта"
+      }
+    },
+    {
+      "id": "PK",
+      "name": {
+        "english": "Pakistan",
+        "russian": "Пакистан"
+      },
+      "population": 225000000,
+      "area": 881912,
+      "capital": {
+        "english": "Islamabad",
+        "russian": "Исламабад"
+      }
+    },
+    {
+      "id": "BR",
+      "name": {
+        "english": "Brazil",
+        "russian": "Бразилия"
+      },
+      "population": 213000000,
+      "area": 8515767,
+      "capital": {
+        "english": "Brasília",
+        "russian": "Бразилиа"
+      }
+    },
+    {
+      "id": "NG",
+      "name": {
+        "english": "Nigeria",
+        "russian": "Нигерия"
+      },
+      "population": 211000000,
+      "area": 923768,
+      "capital": {
+        "english": "Abuja",
+        "russian": "Абуджа"
+      }
+    },
+    {
+      "id": "BD",
+      "name": {
+        "english": "Bangladesh",
+        "russian": "Бангладеш"
+      },
+      "population": 166000000,
+      "area": 147570,
+      "capital": {
+        "english": "Dhaka",
+        "russian": "Дакка"
+      }
+    },
+    {
+      "id": "RU",
+      "name": {
+        "english": "Russia",
+        "russian": "Россия"
+      },
+      "population": 144000000,
+      "area": 17098242,
+      "capital": {
+        "english": "Moscow",
+        "russian": "Москва"
+      }
+    },
+    {
+      "id": "MX",
+      "name": {
+        "english": "Mexico",
+        "russian": "Мексика"
+      },
+      "population": 128000000,
+      "area": 1964375,
+      "capital": {
+        "english": "Mexico City",
+        "russian": "Мехико"
+      }
+    },
+    {
+      "id": "JP",
+      "name": {
+        "english": "Japan",
+        "russian": "Япония"
+      },
+      "population": 126000000,
+      "area": 377930,
+      "capital": {
+        "english": "Tokyo",
+        "russian": "Токио"
+      }
+    },
+    {
+      "id": "ET",
+      "name": {
+        "english": "Ethiopia",
+        "russian": "Эфиопия"
+      },
+      "population": 117000000,
+      "area": 1104300,
+      "capital": {
+        "english": "Addis Ababa",
+        "russian": "Аддис-Абеба"
+      }
+    },
+    {
+      "id": "EG",
+      "name": {
+        "english": "Egypt",
+        "russian": "Египет"
+      },
+      "population": 100000000,
+      "area": 1002450,
+      "capital": {
+        "english": "Cairo",
+        "russian": "Каир"
+      }
+    },
+    {
+      "id": "VN",
+      "name": {
+        "english": "Vietnam",
+        "russian": "Вьетнам"
+      },
+      "population": 97000000,
+      "area": 331212,
+      "capital": {
+        "english": "Hanoi",
+        "russian": "Ханой"
+      }
+    },
+    {
+      "id": "DE",
+      "name": {
+        "english": "Germany",
+        "russian": "Германия"
+      },
+      "population": 83000000,
+      "area": 357114,
+      "capital": {
+        "english": "Berlin",
+        "russian": "Берлин"
+      }
+    },
+    {
+      "id": "IR",
+      "name": {
+        "english": "Iran",
+        "russian": "Иран"
+      },
+      "population": 83000000,
+      "area": 1648195,
+      "capital": {
+        "english": "Tehran",
+        "russian": "Тегеран"
+      }
+    },
+    {
+      "id": "TR",
+      "name": {
+        "english": "Turkey",
+        "russian": "Турция"
+      },
+      "population": 82000000,
+      "area": 783356,
+      "capital": {
+        "english": "Ankara",
+        "russian": "Анкара"
+      }
+    }
+  ]
+}

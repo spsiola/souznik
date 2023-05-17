@@ -85,6 +85,27 @@
         width: 200px;
         height: 80px;
       }
+      .loading {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        border: 3px solid rgba(96, 206, 243, 0.7);
+        border-radius: 50%;
+        border-top-color: darkblue;
+        animation: spin 1s ease-in-out infinite;
+        -webkit-animation: spin 1s ease-in-out infinite;
+      }
+
+      @keyframes spin {
+        to {
+          -webkit-transform: rotate(360deg);
+        }
+      }
+      @-webkit-keyframes spin {
+        to {
+          -webkit-transform: rotate(360deg);
+        }
+      }
       .splash {
         display: none;
         box-sizing: border-box;
@@ -172,6 +193,10 @@
         }
       }
     </style>
+    <script>
+      const loadedPlugIns = [];
+      let currIssueData = {};
+    </script>
   </head>
   <body>
     <div id="fail-splash" class="splash">&#128577;</div>
@@ -186,7 +211,7 @@
       🏆=&#127942; 🥇=&#129351; 🥈=&#129352; 🥉=&#129353; 🏅=&#127941;
       🎖=&#127894; 🎗=&#127895; 🎉=&#127881; 💎=&#128142; 🛠=&#128736; 💰=&#128176;
       📧=&#128231; 🔔=&#128276; 🔕=&#128277;
-      🔥💥✨🌟⭐️💐🌵👑🖖👌✊👍👎✌️💍❤️💖💝🎁🎈
+      🔥💥✨🌟⭐️💐🌵👑🖖👌✊👍👎✌️💍❤️💖💝🎁🎈📊🔧
     </div>
     <div id="done-splash" class="splash">
       <p>🤘</p>
@@ -231,12 +256,7 @@
         <button class="main-nav-btn" onclick="goHome()">&#127942;</button>
       </nav>
       <main id="main" class="main-block">
-        <div>
-          <button onclick="mTable()">Таблица умножения</button>
-        </div>
-        <div>
-          <button onclick="mTable()">Таблица умножения</button>
-        </div>
+        <div class="loading"></div>
       </main>
       <footer id="main-footer" class="main-footer"></footer>
     </div>
@@ -297,28 +317,21 @@
           content: [
             {
               id: 'cards1',
-              name: 'Карточки. Набор 1',
-              generator: () => emptyGenerator('Английский. Карточки. Набор 1'),
+              name: 'Карточки. Дни недели',
+              script: 'cards.js',
+              generator: () =>
+                execGenerator('cardsInit', mainDiv, {
+                  url: 'data/english/cards/setDaysOfTheWeek.json',
+                }),
             },
             {
               id: 'cards2',
-              name: 'Карточки. Набор 2',
-              generator: () => emptyGenerator('Английский. Карточки. Набор 2'),
-            },
-            {
-              id: 'cards3',
-              name: 'Карточки. Набор 3',
-              generator: () => emptyGenerator('Английский. Карточки. Набор 3'),
-            },
-            {
-              id: 'cards4',
-              name: 'Карточки. Набор 4',
-              generator: () => emptyGenerator('Английский. Карточки. Набор 4'),
-            },
-            {
-              id: 'cards5',
-              name: 'Карточки. Набор 5',
-              generator: () => emptyGenerator('Английский. Карточки. Набор 5'),
+              name: 'Карточки. Месяцы и времена года',
+              script: 'cards.js',
+              generator: () =>
+                execGenerator('cardsInit', mainDiv, {
+                  url: 'data/english/cards/setMonthsAndSeasons.json',
+                }),
             },
           ],
         },
@@ -329,14 +342,31 @@
           content: [
             {
               id: 'cards1',
-              name: 'Карточки. Набор 1',
+              name: 'Карточки. Pue...',
               script: 'cards.js',
-              generator: () => execGenerator('testCard'),
+              generator: () =>
+                execGenerator('cardsInit', mainDiv, {
+                  url: 'data/spanish/cards/set1.json',
+                }),
             },
-            { id: 'cards2', name: 'Карточки. Набор 2' },
-            { id: 'cards3', name: 'Карточки. Набор 3' },
-            { id: 'cards4', name: 'Карточки. Набор 4' },
-            { id: 'cards5', name: 'Карточки. Набор 5' },
+            {
+              id: 'cards2',
+              name: 'Карточки. Числа и числительные',
+              script: 'cards.js',
+              generator: () =>
+                execGenerator('cardsInit', mainDiv, {
+                  url: 'data/spanish/cards/set2.json',
+                }),
+            },
+            {
+              id: 'cards3',
+              name: 'Карточки. Животные',
+              script: 'cards.js',
+              generator: () =>
+                execGenerator('cardsInit', mainDiv, {
+                  url: 'data/spanish/cards/set3.json',
+                }),
+            },
           ],
         },
         {
@@ -344,12 +374,42 @@
           name: 'География',
           image: 'images/geo.webp',
           content: [
-            { id: 'continents', name: 'Материки' },
-            { id: 'oceans', name: 'Океаны' },
-            { id: 'bigCountries', name: 'Большие страны' },
-            { id: 'bigIslands', name: 'Большие острова' },
-            { id: 'bigRivers', name: 'Большие реки' },
-            { id: 'bigLakes', name: 'Большие озера' },
+            {
+              id: 'continents',
+              name: 'Материки',
+              script: 'geo.js',
+              generator: () => execGenerator('geoInit', mainDiv, {}),
+            },
+            {
+              id: 'oceans',
+              name: 'Океаны',
+              script: 'geo.js',
+              generator: () => execGenerator('geoInit', mainDiv, {}),
+            },
+            {
+              id: 'bigCountries',
+              name: 'Большие страны',
+              script: 'geo.js',
+              generator: () => execGenerator('geoInit', mainDiv, {}),
+            },
+            {
+              id: 'bigIslands',
+              name: 'Большие острова',
+              script: 'geo.js',
+              generator: () => execGenerator('geoInit', mainDiv, {}),
+            },
+            {
+              id: 'bigRivers',
+              name: 'Большие реки',
+              script: 'geo.js',
+              generator: () => execGenerator('geoInit', mainDiv, {}),
+            },
+            {
+              id: 'bigLakes',
+              name: 'Большие озера',
+              script: 'geo.js',
+              generator: () => execGenerator('geoInit', mainDiv, {}),
+            },
           ],
         },
       ];
@@ -424,7 +484,7 @@
             // btn.appendChild(picture);
           } else btn.textContent = el.name;
           if (el.generator) {
-            if (el.script) {
+            if (el.script && !loadedPlugIns.includes(el.script)) {
               addScript(el.script)
                 .then(() => {
                   console.log(`Script "${el.script}" loaded successfully`);
@@ -754,22 +814,28 @@
         mainDiv.appendChild(container);
         return;
       }
-      function execGenerator(funcName) {
+      function execGenerator(funcName, mainDiv, objParam) {
         console.log('execGenerator start with funcName=', funcName);
         if (typeof window[funcName] === 'function') {
           console.log('window[funcName] === function');
-          window[funcName]();
+          window[funcName](mainDiv, objParam);
         } else {
           console.error(`Function ${funcName} does not exist.`);
         }
       }
       //===============================
+      function getScriptNameByUrl(url) {
+        return url.split('/').pop().split('.')[0];
+      }
       function addScript(url) {
+        console.log('addScript  loadedPlugIns=', loadedPlugIns);
         return new Promise((resolve, reject) => {
           const script = document.createElement('script');
           script.src = url;
 
           script.onload = () => {
+            loadedPlugIns.push(url);
+            console.log('addScript resolve loadedPlugIns=', loadedPlugIns);
             resolve();
           };
 
