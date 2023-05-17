@@ -1,0 +1,41 @@
+{
+  "id": "cardSet3",
+  "name": "Животные (самец, самка, детеныш)",
+  "cards": [
+    {
+      "id": 1,
+      "issue": "gato / gata / gatito",
+      "answer": "Кот / кошка / котенок"
+    },
+    {
+      "id": 2,
+      "issue": "Perro / Perra / Cachorro",
+      "answer": "пес / собака / щенок"
+    },
+    {
+      "id": 3,
+      "issue": "Gallo / Gallina / Pollito",
+      "answer": "петух / курица / цыпленок"
+    },
+    {
+      "id": 4,
+      "issue": "Ganso / Gansa / Patito",
+      "answer": "гусь / гусыня / гусенок"
+    },
+    {
+      "id": 5,
+      "issue": "Toro / Vaca / Ternero",
+      "answer": "бык / корова / теленок"
+    },
+    {
+      "id": 6,
+      "issue": "Caballo / Yegua / Potro",
+      "answer": "конь / кобыла / жеребенок"
+    },
+    {
+      "id": 7,
+      "issue": "Carnero / Oveja / Соrdero",
+      "answer": "баран / овца / ягненок"
+    }
+  ]
+}
